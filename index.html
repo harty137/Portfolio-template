@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio</title>
+<meta name="description" content="">
+<link rel="icon" id="favicon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Sora:wght@500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#f6f4fb; --surface:#ffffff; --fg:#17142a; --muted:#5d5a74; --line:#e0dcee;
+    --accent:#6d28d9; --accent2:#0ea5a4; --accent-fg:#ffffff; --danger:#c62828;
+    --link:var(--accent);
+    --grad:linear-gradient(135deg, var(--accent), var(--accent2));
+    --font-display:"Sora","Plus Jakarta Sans",system-ui,sans-serif;
+    --font-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f0d1a; --surface:#181528; --fg:#ece9f7; --muted:#a29fb8; --line:#2c2842;
+      --link:color-mix(in srgb, var(--accent) 50%, white);
+      --danger:#ff8a80;
+      color-scheme:dark;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.7;padding:0 16px 3rem;
+    background:
+      radial-gradient(60rem 28rem at 8% -8%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+      radial-gradient(50rem 26rem at 98% 4%, color-mix(in srgb, var(--accent2) 20%, transparent), transparent 70%),
+      var(--bg);
+    background-repeat:no-repeat;
+  }
+  a{color:var(--link)}
+  a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+  .wrap{max-width:920px;margin-inline:auto}
+
+  header.top{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-between;align-items:center;padding-block:1.25rem;border-bottom:1px solid var(--line)}
+  .brandrow{display:flex;align-items:center;gap:.65rem}
+  .logo{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:11px;background:var(--grad);color:var(--accent-fg);font-family:var(--font-display);font-weight:700;font-size:.85rem;letter-spacing:.02em;box-shadow:0 4px 14px color-mix(in srgb, var(--accent) 35%, transparent)}
+  .brand{font-family:var(--font-display);font-weight:600;font-size:1.05rem}
+  nav{display:flex;flex-wrap:wrap;gap:.25rem 1.5rem}
+  nav a{color:var(--muted);text-decoration:none;font-size:.95rem;font-weight:500}
+  nav a:hover{color:var(--fg)}
+
+  .hero{padding-block:4.5rem 3.75rem;display:grid;gap:1.25rem}
+  .place{display:inline-flex;align-items:center;gap:.55rem;font-size:.8rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:0;font-weight:600}
+  .place::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:var(--grad)}
+  h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.1rem,7vw,3.6rem);line-height:1.1;letter-spacing:-.025em;text-wrap:balance;max-width:18ch;margin:0}
+  .lede{font-size:1.15rem;color:var(--muted);max-width:56ch;margin:0}
+  .actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.5rem}
+  .btn{display:inline-block;padding:.7rem 1.3rem;border-radius:999px;text-decoration:none;border:1.5px solid color-mix(in srgb, var(--accent) 55%, var(--line));font:inherit;font-weight:600;cursor:pointer;background:transparent;color:var(--link)}
+  .btn.solid{background:var(--grad);color:var(--accent-fg);border-color:transparent;box-shadow:0 6px 20px color-mix(in srgb, var(--accent) 30%, transparent)}
+  .btn.small{padding:.4rem .9rem;font-size:.85rem}
+  .btn:hover{filter:brightness(1.07)}
+
+  section.block{padding-block:3rem;border-top:1px solid var(--line)}
+  h2{font-family:var(--font-display);font-size:1.6rem;line-height:1.2;margin:0 0 1.75rem;text-wrap:balance}
+  h2::after{content:"";display:block;width:44px;height:4px;border-radius:4px;background:var(--grad);margin-top:.6rem}
+  .about{display:grid;gap:1rem;max-width:62ch;color:var(--muted)}
+  .about p{margin:0}
+  .about p:first-child{color:var(--fg);font-size:1.05rem}
+
+  .projects{display:grid;list-style:none;padding:0;margin:0}
+  .project{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:.5rem 2rem;padding-block:1.5rem;border-top:1px solid var(--line)}
+  .project:first-child{border-top:0;padding-top:0}
+  .project h3{font-family:var(--font-display);font-size:1.15rem;line-height:1.3;margin:0}
+  .project .meta{color:var(--muted);font-size:.85rem;margin:.25rem 0 0}
+  .project p.desc{color:var(--muted);margin:0 0 .75rem}
+  .tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:0 0 .75rem}
+  .tags li{font-size:.78rem;font-weight:500;padding:.18rem .7rem;border-radius:99px;color:var(--fg);background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 20%, transparent), color-mix(in srgb, var(--accent2) 20%, transparent))}
+  @media (max-width:640px){ .project{grid-template-columns:minmax(0,1fr)} }
+
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem 2rem}
+  .skills h3{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--link);margin:0 0 .5rem;font-weight:600}
+  .skills ul{list-style:none;padding:0;margin:0;display:grid;gap:.25rem}
+
+  .contact-box{border:1.5px solid transparent;border-radius:16px;padding:1.25rem 1.5rem;display:grid;gap:1rem;max-width:560px;
+    background:linear-gradient(var(--surface), var(--surface)) padding-box, var(--grad) border-box}
+  .row{display:flex;flex-wrap:wrap;gap:.25rem 1rem;align-items:center;justify-content:space-between}
+  .row .k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .row .v{font-weight:500;overflow-wrap:anywhere}
+
+  footer.bottom{padding-top:2rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between}
+
+  /* ---- Editor (removed from the downloaded site) ---- */
+  #editBtn{position:fixed;right:14px;bottom:14px;z-index:20;padding:.45rem 1rem;font-size:.85rem}
+  #editor{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);z-index:30;background:var(--surface);border-left:1px solid var(--line);overflow:auto;padding:1rem 1.1rem 4.5rem;box-shadow:-8px 0 30px rgba(0,0,0,.25)}
+  #editor[hidden]{display:none}
+  #editor h2{font-size:1.1rem;margin:0}
+  #editor h2::after{display:none}
+  #editor h3{font-family:var(--font-display);font-size:.95rem;margin:1.5rem 0 .5rem}
+  .ed-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;position:sticky;top:-1rem;background:var(--surface);padding:.5rem 0 .75rem;z-index:1}
+  .ed-title{display:flex;align-items:center;gap:.6rem}
+  .ed-title .logo{width:30px;height:30px;border-radius:9px;font-size:.72rem}
+  .field{display:grid;gap:.25rem;margin-bottom:.75rem}
+  .field label{font-size:.78rem;color:var(--muted)}
+  .field input,.field textarea{font:inherit;font-size:.95rem;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.5rem .65rem;width:100%}
+  .field textarea{min-height:90px;resize:vertical}
+  .field input[type=color]{padding:2px;height:38px;width:100%}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+  .item{border:1px solid var(--line);border-radius:12px;padding:.75rem;margin-bottom:.75rem}
+  .item .bar{display:flex;gap:.5rem;justify-content:flex-end;margin-bottom:.5rem}
+  .help{font-size:.85rem;color:var(--muted);margin:.25rem 0 .75rem}
+  .ed-foot{position:fixed;right:0;bottom:0;width:min(440px,100vw);background:var(--surface);border-top:1px solid var(--line);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;z-index:31}
+  .ed-foot[hidden]{display:none}
+  .ed-foot .more{display:flex;gap:.9rem}
+  .link-btn{background:none;border:0;padding:.25rem 0;font:inherit;font-size:.78rem;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .link-btn:hover{color:var(--fg)}
+  .notice{background:color-mix(in srgb, var(--accent) 10%, var(--surface));border-radius:12px;padding:.75rem;font-size:.9rem;margin-bottom:.75rem}
+  .notice textarea{display:block;width:100%;margin:.6rem 0;font:12px/1.4 ui-monospace,Consolas,monospace;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.5rem}
+
+  /* ---- Plans ---- */
+  .avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;padding:3px;background:var(--grad);display:block}
+  .sponsor{margin-top:2.5rem;border:1px dashed var(--line);border-radius:14px;padding:.9rem 1.1rem;display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;justify-content:space-between;color:var(--muted);font-size:.9rem}
+  .sponsor .tagline{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
+  .plan{border:1.5px solid transparent;border-radius:14px;padding:.9rem;margin-bottom:1rem;font-size:.9rem;background:linear-gradient(var(--surface), var(--surface)) padding-box, var(--grad) border-box}
+  .plan ul{margin:.4rem 0 .7rem;padding-left:1.1rem;font-size:.85rem;color:var(--muted)}
+  .plan .code-row{display:flex;gap:.5rem;margin-top:.7rem}
+  .plan .code-row input{flex:1;min-width:0;font:inherit;font-size:.9rem;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.4rem .6rem}
+  .plan .msg{font-size:.8rem;margin:.4rem 0 0;color:var(--muted)}
+  .badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.1rem .6rem;border-radius:99px;background:var(--grad);color:var(--accent-fg);vertical-align:middle;margin-left:.4rem}
+  .field.locked{opacity:.55}
+  .hl{font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .code-label{display:block;margin-top:.8rem;font-size:.85rem;font-weight:600}
+  .plan .msg.error{color:var(--danger);font-weight:600}
+  .plan .code-row input.invalid{border-color:var(--danger);outline-color:var(--danger)}
+  .owner{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.25rem;margin-block:1.5rem}
+  .owner h2{font-size:1.2rem;margin-bottom:.75rem}
+  .owner h2::after{display:none}
+  .owner code{display:block;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,Consolas,monospace;background:var(--bg);border-radius:8px;padding:.6rem}
+  .codes{display:grid;gap:.4rem;margin:1rem 0;font:13px ui-monospace,Consolas,monospace}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="site"></div>
+
+<button class="btn solid" id="editBtn" data-editor type="button">Edit my info</button>
+<aside id="editor" data-editor hidden aria-label="Edit your portfolio"></aside>
+<div class="ed-foot" id="edFoot" data-editor hidden></div>
+
+<script id="app">
+/* =====================================================================
+   OWNER SETTINGS  (the person who sells or shares this template edits this)
+   ===================================================================== */
+var SETTINGS = {
+  templateName: "DN Portfolio Template",       // shown in the footer credit of every site made with it
+  creditUrl: "https://example.com/get-template", // where visitors of a user's site land to get their own copy
+  premiumUrl: "",                              // your payment link for the Premium plan (Selar, Flutterwave, Paystack, PayPal)
+  premiumPrice: "UGX 30,000 one-time",         // shown on the upgrade button
+  salt: "change-this-secret-word",             // any private word; change it BEFORE you make codes
+  premiumHashes: [],                           // paste the hashes made in Owner tools here (open this page with #owner at the end)
+  freeLimits: { projects: 3, skills: 2 },      // what the Free plan allows
+  sponsor: { text: "Get your own .com web address for your portfolio.", url: "", cta: "Learn more" }, // sponsor banner on Free sites; hidden until url is set
+  tipUrl: "",                                  // optional: your tip or payment link (Buy Me a Coffee, Flutterwave, Paystack, PayPal)
+  affiliateUrl: "",                            // optional: your hosting or domain affiliate link, shown in the publish help
+  affiliateLabel: "Get a custom domain",
+  storageKey: "portfolio-template-v2"
+};
+
+/* =====================================================================
+   Starter content (visitors replace all of this in the editor)
+   ===================================================================== */
+var DEFAULTS = {
+  name: "Amina Kato",
+  logo: "DN",
+  headline: "I design simple apps for growing businesses.",
+  intro: "Product designer working with startups and small teams. I turn messy ideas into clear, easy-to-use products.",
+  location: "Kampala, Uganda",
+  about: "I am a product designer with five years of experience in fintech and education.\n\nRight now I am open to freelance projects and full-time roles.",
+  accent: "#6d28d9",
+  accent2: "#0ea5a4",
+  projects: [
+    { title: "Mobile money app", meta: "2025 · Lead designer", desc: "Redesigned the send-money flow, cutting failed payments by a third.", tags: "Research, UI, Prototyping", link: "" },
+    { title: "School reports portal", meta: "2024 · Designer", desc: "A portal that lets parents see grades and fees on their phones.", tags: "UX, Mobile, Figma", link: "" }
+  ],
+  skills: [
+    { group: "Design", items: "UI design, Prototyping, Design systems" },
+    { group: "Research", items: "Interviews, Usability tests, Surveys" }
+  ],
+  email: "",
+  whatsapp: "",
+  linkedin: "",
+  github: "",
+  instagram: "",
+  x: "",
+  youtube: "",
+  website: "",
+  photo: "",
+  licence: ""
+};
+
+/* ---------- state ---------- */
+var state = load();
+function load(){
+  var s = JSON.parse(JSON.stringify(DEFAULTS));
+  try{
+    var raw = localStorage.getItem(SETTINGS.storageKey);
+    if(raw){ var saved = JSON.parse(raw); for(var k in saved){ s[k] = saved[k]; } }
+  }catch(e){}
+  return s;
+}
+function save(){ try{ localStorage.setItem(SETTINGS.storageKey, JSON.stringify(state)); }catch(e){} }
+
+/* ---------- helpers ---------- */
+function el(tag, props){
+  var e = document.createElement(tag);
+  for(var k in (props||{})){
+    if(k === 'class') e.className = props[k];
+    else if(k === 'text') e.textContent = props[k];
+    else e.setAttribute(k, props[k]);
+  }
+  for(var i = 2; i < arguments.length; i++){
+    var c = arguments[i];
+    if(c == null || c === false) continue;
+    if(Array.isArray(c)){ c.forEach(function(x){ if(x) e.append(x); }); }
+    else e.append(c.nodeType ? c : document.createTextNode(c));
+  }
+  return e;
+}
+function safeUrl(u){
+  u = (u||'').trim();
+  if(!u) return '';
+  if(/^https?:\/\//i.test(u)) return u;
+  if(/^[\w-]+(\.[\w-]+)+(\/.*)?$/i.test(u)) return 'https://' + u;
+  return '';
+}
+function list(str){ return (str||'').split(',').map(function(s){ return s.trim(); }).filter(Boolean); }
+function slug(s){ return (s||'portfolio').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'portfolio'; }
+function hex(c, fallback){ return /^#[0-9a-f]{6}$/i.test(c||'') ? c : fallback; }
+function rgb(h){ var n = parseInt(h.slice(1), 16); return [(n>>16)&255, (n>>8)&255, n&255]; }
+function readableOn(h1, h2){
+  var a = rgb(h1), b = rgb(h2);
+  var lum = 0.299*(a[0]+b[0])/2 + 0.587*(a[1]+b[1])/2 + 0.114*(a[2]+b[2])/2;
+  return lum > 165 ? '#14122a' : '#ffffff';
+}
+function logoText(){ return ((state.logo || 'DN').replace(/[^A-Za-z0-9]/g,'').slice(0,2).toUpperCase()) || 'DN'; }
+function setFavicon(c1, c2){
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c1 + '"/><stop offset="1" stop-color="' + c2 + '"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#g)"/><text x="32" y="42" font-family="Arial,sans-serif" font-size="28" font-weight="700" text-anchor="middle" fill="#ffffff">' + logoText() + '</text></svg>';
+  document.getElementById('favicon').setAttribute('href', 'data:image/svg+xml,' + encodeURIComponent(svg));
+}
+
+/* ---------- plans ---------- */
+function hash(str){
+  var h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+  for(var i = 0, ch; i < str.length; i++){ ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+}
+function isPremium(){
+  try{ if(localStorage.getItem('dn-owner-preview') === '1') return true; }catch(e){}
+  var c = (state.licence || '').trim().toUpperCase();
+  return !!c && SETTINGS.premiumHashes.indexOf(hash(SETTINGS.salt + c)) > -1;
+}
+function social(base, v){
+  v = (v || '').trim();
+  if(!v) return '';
+  if(/^https?:\/\//i.test(v) || v.indexOf('.') > -1) return safeUrl(v);
+  return base + v.replace(/^@/, '').replace(/[^\w.]/g, '');
+}
+
+/* ---------- site rendering ---------- */
+function render(){
+  var s = state, root = document.documentElement;
+  var c1 = hex(s.accent, DEFAULTS.accent), c2 = hex(s.accent2, DEFAULTS.accent2);
+  root.style.setProperty('--accent', c1);
+  root.style.setProperty('--accent2', c2);
+  root.style.setProperty('--accent-fg', readableOn(c1, c2));
+  setFavicon(c1, c2);
+  document.title = (s.name ? s.name + ' | ' : '') + 'Portfolio';
+  document.querySelector('meta[name=description]').setAttribute('content', s.intro || '');
+
+  var pro = isPremium();
+  var projects = (s.projects||[]).filter(function(p){ return p.title; });
+  var skills = (s.skills||[]).filter(function(g){ return g.group || g.items; });
+  if(!pro){ projects = projects.slice(0, SETTINGS.freeLimits.projects); skills = skills.slice(0, SETTINGS.freeLimits.skills); }
+  var paragraphs = (s.about||'').split(/\n\s*\n/).map(function(p){ return p.trim(); }).filter(Boolean);
+  var wa = (s.whatsapp||'').replace(/\D/g,'');
+  var contacts = [];
+  if(s.email) contacts.push(['Email', el('a', {href:'mailto:'+s.email, text:s.email})]);
+  if(wa) contacts.push(['WhatsApp', el('a', {href:'https://wa.me/'+wa, text:s.whatsapp})]);
+  if(safeUrl(s.linkedin)) contacts.push(['LinkedIn', el('a', {href:safeUrl(s.linkedin), text:s.linkedin.replace(/^https?:\/\//,'')})]);
+  if(pro){
+    [['GitHub', safeUrl(s.github)], ['Instagram', social('https://instagram.com/', s.instagram)], ['X', social('https://x.com/', s.x)], ['YouTube', safeUrl(s.youtube)], ['Website', safeUrl(s.website)]].forEach(function(x){
+      if(x[1]) contacts.push([x[0], el('a', {href:x[1], text:x[1].replace(/^https?:\/\//,'')})]);
+    });
+  }
+
+  var nav = el('nav', {'aria-label':'Sections'});
+  [['about', paragraphs.length], ['projects', projects.length], ['skills', skills.length], ['contact', contacts.length]].forEach(function(x){
+    if(x[1]) nav.append(el('a', {href:'#'+x[0], text:x[0].charAt(0).toUpperCase()+x[0].slice(1)}));
+  });
+
+  var parts = [];
+  parts.push(el('header', {class:'top'},
+    el('div', {class:'brandrow'}, el('span', {class:'logo', 'aria-hidden':'true', text:logoText()}), el('span', {class:'brand', text:s.name || 'Your name'})),
+    nav));
+
+  var main = el('main');
+  var avatar = (pro && /^data:image\/jpeg;base64,/.test(s.photo || '')) ? el('img', {class:'avatar', src:s.photo, alt:''}) : null;
+  main.append(el('div', {class:'hero'},
+    avatar,
+    s.location ? el('p', {class:'place', text:s.location}) : null,
+    el('h1', {text:s.headline || 'Your headline goes here.'}),
+    s.intro ? el('p', {class:'lede', text:s.intro}) : null,
+    el('div', {class:'actions'},
+      projects.length ? el('a', {class:'btn solid', href:'#projects', text:'See my work'}) : null,
+      contacts.length ? el('a', {class:'btn', href:'#contact', text:'Get in touch'}) : null)));
+
+  if(paragraphs.length) main.append(el('section', {class:'block', id:'about'},
+    el('h2', {text:'About me'}),
+    el('div', {class:'about'}, paragraphs.map(function(p){ return el('p', {text:p}); }))));
+
+  if(projects.length) main.append(el('section', {class:'block', id:'projects'},
+    el('h2', {text:'Selected projects'}),
+    el('ul', {class:'projects'}, projects.map(function(p){
+      var link = safeUrl(p.link);
+      return el('li', {class:'project'},
+        el('div', null, el('h3', {text:p.title}), p.meta ? el('p', {class:'meta', text:p.meta}) : null),
+        el('div', null,
+          p.desc ? el('p', {class:'desc', text:p.desc}) : null,
+          list(p.tags).length ? el('ul', {class:'tags'}, list(p.tags).map(function(t){ return el('li', {text:t}); })) : null,
+          link ? el('a', {href:link, target:'_blank', rel:'noopener', text:'View project'}) : null));
+    }))));
+
+  if(skills.length) main.append(el('section', {class:'block', id:'skills'},
+    el('h2', {text:'Skills'}),
+    el('div', {class:'skills'}, skills.map(function(g){
+      return el('div', null, el('h3', {text:g.group}),
+        el('ul', null, list(g.items).map(function(i){ return el('li', {text:i}); })));
+    }))));
+
+  if(contacts.length) main.append(el('section', {class:'block', id:'contact'},
+    el('h2', {text:'Contact'}),
+    el('div', {class:'contact-box'}, contacts.map(function(c){
+      return el('div', {class:'row'}, el('span', {class:'k', text:c[0]}), el('span', {class:'v'}, c[1]));
+    }))));
+  parts.push(main);
+
+  var foot = el('footer', {class:'bottom'}, el('span', {text:'© ' + new Date().getFullYear() + ' ' + (s.name || '')}));
+  if(!pro){
+    foot.append(el('span', null, 'Made with ', el('a', {href:SETTINGS.creditUrl, target:'_blank', rel:'noopener', text:SETTINGS.templateName})));
+    var sp = SETTINGS.sponsor || {};
+    if(safeUrl(sp.url)) parts.push(el('div', {class:'sponsor'},
+      el('span', null, el('span', {class:'tagline', text:'Sponsored'}), el('br'), sp.text || ''),
+      el('a', {href:safeUrl(sp.url), target:'_blank', rel:'noopener sponsored', text:sp.cta || 'Learn more'})));
+  }
+  parts.push(foot);
+
+  var site = document.getElementById('site');
+  site.replaceChildren.apply(site, parts);
+}
+
+/* ---------- editor ---------- */
+var editor = document.getElementById('editor');
+var edFoot = document.getElementById('edFoot');
+var editBtn = document.getElementById('editBtn');
+
+function field(label, obj, key, opts){
+  opts = opts || {};
+  var id = 'f_' + Math.random().toString(36).slice(2, 9);
+  var input = opts.area ? el('textarea', {id:id}) : el('input', {id:id, type:opts.type || 'text', autocomplete:'off'});
+  if(opts.placeholder) input.setAttribute('placeholder', opts.placeholder);
+  if(opts.max) input.setAttribute('maxlength', opts.max);
+  if(opts.locked) input.disabled = true;
+  input.value = obj[key] || (opts.type === 'color' ? '#000000' : '');
+  input.addEventListener('input', function(){ obj[key] = input.value; save(); render(); });
+  return el('div', {class:'field' + (opts.locked ? ' locked' : '')}, el('label', {for:id, text:label + (opts.locked ? ' (Premium)' : '')}), input);
+}
+
+function addControl(label, count, limit, onAdd){
+  var b = el('button', {class:'btn small', type:'button', text:label});
+  if(!isPremium() && count >= limit){
+    b.disabled = true; b.style.opacity = '.5';
+    return el('div', null, b, el('p', {class:'help', text:'Free plan limit reached (' + limit + '). Upgrade to Premium for unlimited.'}));
+  }
+  b.addEventListener('click', onAdd);
+  return b;
+}
+
+function planCard(){
+  var pro = isPremium();
+  var box = el('div', {class:'plan'});
+  if(pro){
+    box.append(el('strong', null, el('span', {class:'hl', text:'Premium'}), ' plan'), el('span', {class:'badge', text:'Active'}),
+      el('p', {class:'help', text:'Unlimited projects and skills, profile photo and all contact links are on. Your site has no credit line and no sponsor banner.'}));
+  } else {
+    box.append(el('strong', {text:'Free plan'}),
+      el('ul', null,
+        el('li', {text:'Up to ' + SETTINGS.freeLimits.projects + ' projects and ' + SETTINGS.freeLimits.skills + ' skill groups'}),
+        el('li', {text:'Email, WhatsApp and LinkedIn links'}),
+        el('li', {text:'Small "Made with" credit and a sponsor banner on your site'})),
+      el('strong', {class:'hl', text:'Premium'}),
+      el('ul', null,
+        el('li', {text:'Unlimited projects and skills'}),
+        el('li', {text:'Profile photo'}),
+        el('li', {text:'GitHub, Instagram, X, YouTube and website links'}),
+        el('li', {text:'No credit line and no ads'})));
+    if(safeUrl(SETTINGS.premiumUrl)) box.append(el('a', {class:'btn solid small', href:safeUrl(SETTINGS.premiumUrl), target:'_blank', rel:'noopener', text:'Get Premium: ' + SETTINGS.premiumPrice}));
+  }
+  var msg = el('p', {class:'msg'});
+  var input = el('input', {type:'text', id:'licence', placeholder:'Paste your code here', autocomplete:'off', 'aria-label':'Premium code'});
+  input.value = state.licence || '';
+  var go = el('button', {class:'btn small', type:'button', text:'Activate'});
+  go.addEventListener('click', function(){
+    state.licence = input.value.trim(); save();
+    if(isPremium()){ buildEditor(); render(); }
+    else {
+      msg.className = 'msg error';
+      msg.textContent = state.licence ? 'That code is not valid. Check it and try again.' : 'Enter your code first.';
+      input.classList.add('invalid');
+      render();
+    }
+  });
+  box.append(el('label', {class:'code-label', for:'licence'}, el('span', {class:'hl', text:'Premium'}), ' code'), el('div', {class:'code-row'}, input, go), msg);
+  return box;
+}
+
+function photoField(){
+  var pro = isPremium();
+  var input = el('input', {id:'f_photo', type:'file', accept:'image/*'});
+  if(!pro) input.disabled = true;
+  input.addEventListener('change', function(){
+    var f = input.files[0]; if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var size = 360, c = document.createElement('canvas'); c.width = c.height = size;
+        var m = Math.min(img.width, img.height);
+        c.getContext('2d').drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, size, size);
+        state.photo = c.toDataURL('image/jpeg', 0.82); save(); render(); buildEditor();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  var wrap = el('div', {class:'field' + (pro ? '' : ' locked')}, el('label', {for:'f_photo', text:'Profile photo' + (pro ? '' : ' (Premium)')}), input);
+  if(pro && state.photo){
+    var rm = el('button', {class:'btn small', type:'button', text:'Remove photo'});
+    rm.addEventListener('click', function(){ state.photo = ''; save(); render(); buildEditor(); });
+    wrap.append(rm);
+  }
+  return wrap;
+}
+
+function buildEditor(){
+  var s = state, pro = isPremium();
+  var close = el('button', {class:'btn small', type:'button', text:'Close'});
+  close.addEventListener('click', function(){ editor.hidden = true; edFoot.hidden = true; editBtn.hidden = false; });
+  var kids = [];
+  kids.push(el('div', {class:'ed-head'},
+    el('div', {class:'ed-title'}, el('span', {class:'logo', 'aria-hidden':'true', text:logoText()}), el('h2', {text:'Edit your portfolio'})),
+    close));
+  kids.push(el('p', {class:'notice', text:'Type your details below. The page updates as you type and is saved in this browser. When you are happy, press Download site at the bottom.'}));
+  kids.push(planCard());
+
+  kids.push(el('h3', {text:'About you'}));
+  kids.push(field('Your name', s, 'name'));
+  kids.push(field('Logo letters (up to 2)', s, 'logo', {max:2}));
+  kids.push(photoField());
+  kids.push(field('Headline (one sentence)', s, 'headline', {placeholder:'I design apps for small businesses.'}));
+  kids.push(field('Short intro', s, 'intro', {area:true}));
+  kids.push(field('Where you are based', s, 'location'));
+  kids.push(field('About me (leave a blank line between paragraphs)', s, 'about', {area:true}));
+  kids.push(el('div', {class:'two'}, field('Colour one', s, 'accent', {type:'color'}), field('Colour two', s, 'accent2', {type:'color'})));
+
+  kids.push(el('h3', {text:'Projects'}));
+  s.projects.forEach(function(p, idx){
+    var rm = el('button', {class:'btn small', type:'button', text:'Remove'});
+    rm.addEventListener('click', function(){ s.projects.splice(idx,1); save(); buildEditor(); render(); });
+    kids.push(el('div', {class:'item'},
+      el('div', {class:'bar'}, rm),
+      field('Title', p, 'title'), field('Year and your role', p, 'meta'),
+      field('What it is and the result', p, 'desc', {area:true}),
+      field('Tags (separate with commas)', p, 'tags'), field('Link (optional)', p, 'link', {placeholder:'https://'})));
+  });
+  kids.push(addControl('Add a project', s.projects.length, SETTINGS.freeLimits.projects, function(){
+    s.projects.push({title:'', meta:'', desc:'', tags:'', link:''}); save(); buildEditor();
+  }));
+
+  kids.push(el('h3', {text:'Skills'}));
+  s.skills.forEach(function(g, idx){
+    var rm = el('button', {class:'btn small', type:'button', text:'Remove'});
+    rm.addEventListener('click', function(){ s.skills.splice(idx,1); save(); buildEditor(); render(); });
+    kids.push(el('div', {class:'item'}, el('div', {class:'bar'}, rm),
+      field('Group name', g, 'group'), field('Skills (separate with commas)', g, 'items')));
+  });
+  kids.push(addControl('Add a skill group', s.skills.length, SETTINGS.freeLimits.skills, function(){
+    s.skills.push({group:'', items:''}); save(); buildEditor();
+  }));
+
+  kids.push(el('h3', {text:'Contact'}));
+  kids.push(field('Email', s, 'email', {type:'email'}));
+  kids.push(field('WhatsApp number (with country code)', s, 'whatsapp', {placeholder:'+256 700 000000'}));
+  kids.push(field('LinkedIn link', s, 'linkedin'));
+  kids.push(field('GitHub link', s, 'github', {locked:!pro}));
+  kids.push(field('Instagram (name or link)', s, 'instagram', {locked:!pro}));
+  kids.push(field('X (name or link)', s, 'x', {locked:!pro}));
+  kids.push(field('YouTube link', s, 'youtube', {locked:!pro}));
+  kids.push(field('Your website', s, 'website', {locked:!pro}));
+
+  kids.push(el('h3', {text:'Publish for free'}));
+  kids.push(el('div', {class:'help'},
+    '1. Press Download site (the file is named index.html). 2. Put it alone in a new folder. 3. Go to ',
+    el('a', {href:'https://app.netlify.com/drop', target:'_blank', rel:'noopener', text:'Netlify Drop'}),
+    ' and drag the folder in. You get a free link to share.'));
+  if(safeUrl(SETTINGS.affiliateUrl)) kids.push(el('p', {class:'help'}, el('a', {href:safeUrl(SETTINGS.affiliateUrl), target:'_blank', rel:'noopener', text:SETTINGS.affiliateLabel}), ' to use your own web address.'));
+  if(safeUrl(SETTINGS.tipUrl)) kids.push(el('p', {class:'help'}, 'Like this template? ', el('a', {href:safeUrl(SETTINGS.tipUrl), target:'_blank', rel:'noopener', text:'Support the creator'}), '.'));
+
+  editor.replaceChildren.apply(editor, kids);
+
+  var dl = el('button', {class:'btn solid small', type:'button', text:'Download site'});
+  dl.addEventListener('click', downloadSite);
+  var bk = el('button', {class:'link-btn', type:'button', text:'Backup', title:'Save your details as a backup file'});
+  bk.addEventListener('click', function(){ download(JSON.stringify(state, null, 2), slug(state.name) + '-backup.json', 'application/json'); });
+  var imp = el('button', {class:'link-btn', type:'button', text:'Restore', title:'Load a backup file'});
+  var fileIn = el('input', {type:'file', accept:'application/json', hidden:'hidden'});
+  imp.addEventListener('click', function(){ fileIn.click(); });
+  fileIn.addEventListener('change', function(){
+    var f = fileIn.files[0]; if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try{ var d = JSON.parse(r.result); for(var k in d){ state[k] = d[k]; } save(); buildEditor(); render(); }
+      catch(e){ alert('That file could not be read.'); }
+    };
+    r.readAsText(f);
+  });
+  var reset = el('button', {class:'link-btn', type:'button', text:'Reset', title:'Clear everything and start over'});
+  reset.addEventListener('click', function(){
+    if(!confirm('Clear everything and start over?')) return;
+    state = JSON.parse(JSON.stringify(DEFAULTS)); save(); buildEditor(); render();
+  });
+  edFoot.replaceChildren(dl, el('div', {class:'more'}, bk, imp, reset), fileIn);
+}
+
+function download(text, name, type){
+  var blob = new Blob([text], {type:type || 'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+}
+function siteHtml(){
+  var clone = document.documentElement.cloneNode(true);
+  clone.querySelectorAll('[data-editor], script#app').forEach(function(n){ n.remove(); });
+  return '<!doctype html>\n' + clone.outerHTML;
+}
+function downloadSite(){
+  var html = siteHtml(), name = 'index.html';
+  try{ download(html, name, 'text/html'); }catch(e){}
+  showFallback(html, name);
+}
+function showFallback(html, name){
+  var old = document.getElementById('fallback'); if(old) old.remove();
+  var ta = el('textarea', {readonly:'readonly', rows:'8', 'aria-label':'Your site code'});
+  ta.value = html;
+  var copy = el('button', {class:'btn small', type:'button', text:'Copy code'});
+  copy.addEventListener('click', function(){
+    function pick(){ ta.focus(); ta.select(); }
+    try{ navigator.clipboard.writeText(html).then(function(){ copy.textContent = 'Copied'; }, pick); }
+    catch(e){ pick(); }
+  });
+  var box = el('div', {class:'notice', id:'fallback'},
+    el('strong', {text:'Did a file save? '}),
+    'If not, your browser or app blocked the download. Press Copy code, paste it into a new text file named ',
+    el('b', {text:name}), ', then upload that file to your host.',
+    ta, copy);
+  editor.insertBefore(box, editor.children[1] || null);
+  editor.scrollTop = 0;
+}
+
+editBtn.addEventListener('click', function(){ buildEditor(); editor.hidden = false; edFoot.hidden = false; editBtn.hidden = true; });
+
+/* ---------- owner tools: open this page with #owner at the end of the address ---------- */
+function ownerView(){
+  var out = el('div', {class:'codes'});
+  var snippet = el('code', {text:'Press "Make 10 codes" to see the line to paste.'});
+  var gen = el('button', {class:'btn solid small', type:'button', text:'Make 10 codes'});
+  gen.addEventListener('click', function(){
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', hashes = [], rows = [];
+    for(var n = 0; n < 10; n++){
+      var buf = new Uint8Array(12); crypto.getRandomValues(buf);
+      var raw = ''; for(var i = 0; i < 12; i++) raw += chars.charAt(buf[i] % chars.length);
+      var code = 'DN-' + raw.slice(0,4) + '-' + raw.slice(4,8) + '-' + raw.slice(8,12);
+      hashes.push(hash(SETTINGS.salt + code));
+      rows.push(el('div', {text:code}));
+    }
+    out.replaceChildren.apply(out, rows);
+    snippet.textContent = 'premiumHashes: ' + JSON.stringify(hashes) + ',';
+  });
+  var test = el('button', {class:'btn small', type:'button', text:'Toggle Premium preview (this browser only)'});
+  test.addEventListener('click', function(){
+    try{ localStorage.setItem('dn-owner-preview', localStorage.getItem('dn-owner-preview') === '1' ? '0' : '1'); }catch(e){}
+    render(); if(!editor.hidden) buildEditor();
+  });
+  var panel = el('section', {class:'owner', 'data-editor':''},
+    el('h2', {text:'Owner tools'}),
+    el('p', {class:'help', text:'1. Change "salt" in SETTINGS to your own secret word. 2. Make codes here and sell one per customer. 3. Paste the line below into SETTINGS, replacing or adding to premiumHashes, then upload the file again. Codes only work with the salt they were made with.'}),
+    el('div', {class:'ed-actions', style:'display:flex;gap:.5rem;flex-wrap:wrap'}, gen, test),
+    out, snippet);
+  document.body.insertBefore(panel, document.getElementById('site'));
+}
+if(location.hash === '#owner') ownerView();
+
+render();
+</script>
+</body>
+</html>
